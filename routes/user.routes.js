@@ -8,6 +8,6 @@ const userController = new UserController()
 router.post('/register',userController.register)
 
 //login routes
-router.post('/login', userController.login)
+// router.post('/login', userController.login)
 
 module.exports = router

@@ -2,7 +2,8 @@ const express = require('express')
 const userRouter = require('./routes/user.routes')
 const itemRouter = require('./routes/item.routes')
 const orderRouter = require('./routes/order.routes')
-const sendEmail = require('./email')
+const userEmailRouter = require('./domain.development-email.js/routes/email.router')
+// const sendEmail = require('./domain.development-email.js/email2')
 
 const app = express()
 
@@ -12,6 +13,7 @@ app.use(express.json())
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/item', itemRouter)
 app.use('/api/v1/order', orderRouter)
+app.use('/api/v1/email', userEmailRouter)
 
 
 
@@ -27,7 +29,5 @@ app.use((err, req, res, next) => {
         error: error
     })
 })
-
-app.get('/mail', sendEmail)
 
 module.exports = app

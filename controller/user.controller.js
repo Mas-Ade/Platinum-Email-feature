@@ -9,14 +9,13 @@ const { loginSchema } = require('../validation/schemas/login.schema')
 
 class UserController{
     async register(req,res,next){
+        
         try {
-            
             const {email, username, password, address, phone} = req.body
-    
             // Validate req. body
             await validate(registerSchema,req.body)
 
-            //Check email exist
+            //Check email exist 
             const isEmailExist = await User.findOne({
                 where:{
                     email
@@ -24,6 +23,7 @@ class UserController{
                 attributes: ['id']
             })
             
+            // throw error respon exist
             if(isEmailExist){
                 throw new ErrorResponse(400,"Email already exist")
             }
@@ -33,18 +33,18 @@ class UserController{
             const hashPassword = await bcrypt.hash(password,salt)
     
             //Create User
-            const user = await User.create({
-                email,
-                username,
-                password:hashPassword,
-                address,
-                phone
-            })
+            // const user = await User.create({
+            //     email,
+            //     username,
+            //     password:hashPassword,
+            //     address,
+            //     phone
+            // })
             //generate token
-            const jwtPayload = {
-                user_id : user.id,
-            }
-            const token = jwt.sign(jwtPayload, process.env.JWT_SECRET, {expiresIn:"30d"})
+            // const jwtPayload = {
+            //     user_id : user.id,
+            // }
+            // const token = jwt.sign(jwtPayload, process.env.JWT_SECRET, {expiresIn:"30d"})
             return new ResponseFormat(res,201,{
                 token
             })
@@ -54,43 +54,43 @@ class UserController{
         }
     }
 
-    async login(req,res,next){
-        try {
-            const {email, password} = req.body
+    // async login(req,res,next){
+    //     try {
+    //         const {email, password} = req.body
 
-            //Validate req.body
-            await validate(loginSchema, req.body)
+    //         //Validate req.body
+    //         await validate(loginSchema, req.body)
 
-            //Check isEmailExist
-            const user = await User.findOne({
-                where: {
-                    email
-                },
-            })
+    //         //Check isEmailExist
+    //         const user = await User.findOne({
+    //             where: {
+    //                 email
+    //             },
+    //         })
 
-            if(!user){
-                throw new ErrorResponse(401,"Invalid Credential")
-            }
+    //         if(!user){
+    //             throw new ErrorResponse(401,"Invalid Credential")
+    //         }
 
-            //Compare Password
-            const compare = await bcrypt.compare(password, user.password)
-            if(!compare){
-                throw new ErrorResponse(401,"Invalid Credential")
-            }
+    //         //Compare Password
+    //         const compare = await bcrypt.compare(password, user.password)
+    //         if(!compare){
+    //             throw new ErrorResponse(401,"Invalid Credential")
+    //         }
 
-            //token
-            const jwtPayload = {
-                user_id : user.id,
-            }
+    //         //token
+    //         const jwtPayload = {
+    //             user_id : user.id,
+    //         }
             
-            const token = jwt.sign(jwtPayload, process.env.JWT_SECRET, {expiresIn:"30d"})
+    //         const token = jwt.sign(jwtPayload, process.env.JWT_SECRET, {expiresIn:"30d"})
 
-            //login
-            return new ResponseFormat(res, 200, {token})
-        } catch (error) {
-            next(error)
-        }
-    }
+    //         //login
+    //         return new ResponseFormat(res, 200, {token})
+    //     } catch (error) {
+    //         next(error)
+    //     }
+    // }
 }
 
 module.exports = {UserController}
