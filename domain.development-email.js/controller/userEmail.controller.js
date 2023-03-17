@@ -32,11 +32,11 @@ class UserEmailController {
       const characters =
         "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-      let randomToken = "";
-      for (let i = 0; i < 25; i++) {
-        randomToken +=
-          characters[Math.floor(Math.random() * characters.length)];
-      }
+      let randomToken = "123456";
+      // for (let i = 0; i < 25; i++) {
+      //   randomToken +=
+      //     characters[Math.floor(Math.random() * characters.length)];
+      // }
 
       //Hash password
       const salt = await bcrypt.genSalt(10);

@@ -35,10 +35,10 @@ User.init(
       allowNull: false,
       defaultValue: "Pending",
     },
-    // confirmation_code: {
-    //   type: DataTypes.STRING,
-    //   allowNull: true,
-    // },
+    verification_token: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     sequelize: sequelize,

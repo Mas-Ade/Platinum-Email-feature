@@ -30,10 +30,7 @@ const sendEmail = (users) => {
 
 module.exports = sendEmail;
 
-// kirim email sudah works
-// lanjut masukan dalam register
-// lanjut buat route untuk task confirm register after click link in email
-
+// fungsi email lainnya
 // sendSmtpEmail.cc = [{"email":"example2@example2.com","name":"Janice Doe"}];
 // sendSmtpEmail.bcc = [{"email":"John Doe","name":"example@example.com"}];
 // sendSmtpEmail.replyTo = {"email":"replyto@domain.com","name":"John Doe"};
