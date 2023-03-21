@@ -8,6 +8,7 @@ const validate = require("../../middleware/validation");
 const { loginSchema } = require("../../validation/schemas/login.schema");
 require("dotenv").config({ path: ".env" });
 const sendEmail = require("../utils/sendEmail");
+const { v4: uuidv4 } = require("uuid");
 
 class UserEmailController {
   async register(req, res, next) {
@@ -29,10 +30,7 @@ class UserEmailController {
         throw new ErrorResponse(400, "Email already exist");
       }
 
-      const characters =
-        "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-      let randomToken = "123456";
+      let randomToken = uuidv4();
       // for (let i = 0; i < 25; i++) {
       //   randomToken +=
       //     characters[Math.floor(Math.random() * characters.length)];
@@ -61,7 +59,10 @@ class UserEmailController {
       });
       const message = "silahkan verivikasi email anda";
 
+      // kirim email dengan parameter user register
       sendEmail(user);
+
+      // return response
       return new ResponseFormat(res, 201, message, token);
     } catch (error) {
       next(error);
